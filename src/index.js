@@ -4,10 +4,12 @@ async function getWeather() {
     var city = document.getElementById("cityName").value;
     var zipCode = document.getElementById("zipCode").value;
     var element = document.getElementById("setWeather");
-    element.innerHTML = "Coucou tu cliques, bravo [" + city + " " + zipCode + "] !";
 
     let url = "https://"+weatherApi+"/api/forecast/nextHours?token="+token+"&latlng=47.3229,5.0379&insee=21231&hourly=true";
     const response = await fetch(url);
     const weatherJson = await response.json();
-    console.log(weatherJson);
+
+    let date = new Date(weatherJson.forecast[0].datetime);
+    console.log(date.getHours());
+    element.innerHTML = "Température dans une heure => " + weatherJson.forecast[1].temp2m + "°C"
 }
