@@ -1,7 +1,7 @@
 async function getWeather() {
     // delete old res
     if (document.getElementById("res")) {
-        document.removeChild(document.getElementById("res"));
+        document.body.removeChild(document.getElementById("res"));
     }
 
     // var
@@ -16,12 +16,31 @@ async function getWeather() {
     const response = await fetch(url);
     const weatherJson = await response.json();
 
-    // parse
-    let date = new Date(weatherJson.forecast[0].datetime);
-    console.log(date.getHours());
-
     // insert res
     let divRes = document.createElement('div');
     divRes.setAttribute("id", "res");
     document.body.appendChild(divRes);
+    let hourNumber = weatherJson.forecast.length;
+    for (i=0;hourNumber > i;i++) {
+        let date = new Date(weatherJson.forecast[i].datetime);
+        let hour = date.getHours();
+        // Title section
+        let hourTitle = document.createElement("h2");
+        let TitleContent = document.createTextNode(hour + "h00");
+        hourTitle.appendChild(TitleContent);
+        divRes.appendChild(hourTitle);
+
+        // infos section
+        let content = document.createElement("p");
+        let contentText = document.createTextNode(
+            "Probability of rainning : " + weatherJson.forecast[i].probarain
+        );
+        content.appendChild(contentText);
+
+        // Append content to body
+        divRes.appendChild(hourTitle);
+        divRes.appendChild(content);
+
+        console.log(weatherJson.forecast[i]);
+    }
 }
