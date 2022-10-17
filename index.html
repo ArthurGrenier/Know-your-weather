@@ -5,17 +5,17 @@
         <link rel="stylesheet" href="./src/index.css">
     </head>
     <body>
-        <h1 id="mainTitle">Know your weather</h1>
+        <div id="ui">
+            <h1 id="mainTitle">Know your weather</h1>
 
-        <input type="text" placeholder="City" id="cityName" />
-        <br><br>
-        <input type="text" placeholder="Zip Code" id="zipCode">
-        <br><br>
-        <input type="checkbox" id="isHourly">
-        <label for="isHourly">Weather hourly ?</label>
-        <br><br>
-        <input type="button" value="\ Search /" id="searchButton" onclick="getWeather()">
-        <br><br>
-        <p id="setWeather"></p>
+            <input type="text" placeholder="City" id="cityName" />
+            <br><br>
+            <input type="text" placeholder="Zip Code" id="zipCode">
+            <br><br>
+            <input type="checkbox" id="isHourly">
+            <label for="isHourly">Weather hourly ?</label>
+            <br><br>
+            <input type="button" value="\ Search /" id="searchButton" onclick="getWeather()">
+        </div>
     </body>
 </html>
