@@ -1,5 +1,13 @@
 body {
     background-color: black;
+    align-items: center;
+    font-family: 'Courier New', monospace;
+}
+
+#ui, #res {
+    padding: 20px;
+    margin: 20px;
+    text-align: center;
 }
 
 h1, h2, h3, p, label {
@@ -11,6 +19,16 @@ h1, h2, h3, p, label {
     padding: 5px 24px;
 }
 
-input, ::placeholder {
+::placeholder {
     text-align: center; 
- }
+}
+
+input {
+    text-align: center;
+    background: #fff;
+    font: inherit;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
+    border: 0;
+    outline: 0;
+    padding: 12px 18px;
+}

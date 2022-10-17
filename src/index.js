@@ -59,8 +59,12 @@ async function getWeather() {
         );
         content.appendChild(contentText);
 
+        // br
+        let br = document.createElement("br");
+
         // Append content to body
         divRes.appendChild(hourTitle);
         divRes.appendChild(content);
+        divRes.appendChild(br);
     }
 }
