@@ -2,7 +2,7 @@ body {
     background-color: black;
 }
 
-h1, h2, p, label {
+h1, h2, h3, p, label {
     color: white;
 }
 
@@ -11,6 +11,6 @@ h1, h2, p, label {
     padding: 5px 24px;
 }
 
-::placeholder {
+input, ::placeholder {
     text-align: center; 
  }
