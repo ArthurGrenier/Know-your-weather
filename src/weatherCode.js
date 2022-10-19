@@ -1,4 +1,4 @@
-const codeTemps = {
+export const weatherCode = {
     "0"   : "Soleil",
     "1"   : "Peu nuageux",
     "2"   : "Ciel voilé",
