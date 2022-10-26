@@ -34,7 +34,12 @@ async function getWeather() {
         divRes.setAttribute("id", "res");
         document.body.appendChild(divRes);
         let titleCity = document.createElement("h2");
-        let titleCityC = document.createTextNode("Weather for " + city);
+        let titleCityC = null
+        if (city == "") {
+            titleCityC = document.createTextNode("Weather for zip code : " + zipCode);
+        } else {
+            titleCityC = document.createTextNode("Weather for city " + city);
+        }
         titleCity.appendChild(titleCityC);
         divRes.appendChild(titleCity);
         let hourNumber = weatherJson.length;
