@@ -18,10 +18,11 @@
             <input type="checkbox" id="isDetails">
             <label for="isDetails">Weather details</label>
             <br><br>
-            <div id="metric">
-                <input type="radio" id="celMet" name="selector"><label for="celMet">Celcus</label>
-                <br>
-                <input type="radio" id="felMet" name="selector"><label for="felMet">Fahrenheit</label>
+            <div id="metricBody">
+                <div id="radio">
+                    <input type="radio" id="celMet" name="selector" label="°C">
+                    <input type="radio" id="felMet" name="selector" label="°F">
+                </div>
             </div>
             <br><br>
             <input type="button" value="Search" id="searchButton" onclick="getWeather()">
