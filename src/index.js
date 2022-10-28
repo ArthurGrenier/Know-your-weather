@@ -14,9 +14,9 @@ async function getWeather() {
     // request city
     let urlCity = "";
     if (zipCode == "") {
-        urlCity = "http://" + weatherApi + "/locations/v1/cities/search?apikey=" + token + "&q=" + city;
+        urlCity = "https://" + weatherApi + "/locations/v1/cities/search?apikey=" + token + "&q=" + city;
     } else {
-        urlCity = "http://" + weatherApi + "/locations/v1/cities/search?apikey=" + token + "&q=" + zipCode;
+        urlCity = "https://" + weatherApi + "/locations/v1/cities/search?apikey=" + token + "&q=" + zipCode;
     }
     
     const responseCity = await fetch(urlCity);
@@ -25,7 +25,7 @@ async function getWeather() {
     if (CityJson != undefined) {
     
         // request weather from city
-        let urlWeather = "http://"+weatherApi+"/forecasts/v1/hourly/12hour/" + CityJson[0].Key + "?apikey=" + token + "&details=true&metric=true";
+        let urlWeather = "https://"+weatherApi+"/forecasts/v1/hourly/12hour/" + CityJson[0].Key + "?apikey=" + token + "&details=true&metric=true";
         const response = await fetch(urlWeather);
         const weatherJson = await response.json();
     
