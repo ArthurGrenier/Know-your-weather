@@ -3,6 +3,7 @@ body {
     align-items: center;
     font-family: 'Courier New', monospace;
     font-size: 20px;
+    display: 100%;
 }
 
 #ui, #res {
@@ -14,6 +15,18 @@ body {
 h1, h2, h3, p, label {
     color: white;
 }
+
+details {
+  padding: 20px;
+  margin: 20px;
+  color: white;
+}
+
+details > summary {
+  color: gray;
+  cursor: pointer;
+}
+
 
 #searchButton {
     background: #000;
