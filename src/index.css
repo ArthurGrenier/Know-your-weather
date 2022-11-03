@@ -4,8 +4,6 @@ body {
     font-family: 'Courier New', monospace;
     font-size: 20px;
     display: 100%;
-    width: 100%;
-    height: 100%;
 }
 
 #ui, #res {
