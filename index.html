@@ -12,10 +12,26 @@
             <br><br>
             <input type="text" placeholder="Zip Code" id="zipCode">
             <br><br>
-            <!-- <input type="checkbox" id="isHourly">
-            <label for="isHourly">Weather hourly ?</label> -->
+            <div id="checkbox">
+                <input type="checkbox" id="isHourly" label="Weather hourly">
+                <br><br>
+                <input type="checkbox" id="isDetails" label="Weather details">
+            </div>
+            <br>
+            <div id="metricBody">
+                <div id="radio">
+                    <input type="radio" id="celMet" name="selector" label="°C" checked>
+                    <input type="radio" id="felMet" name="selector" label="°F">
+                </div>
+            </div>
             <br><br>
             <input type="button" value="Search" id="searchButton" onclick="getWeather()">
         </div>
+        <div id="result"></div>
+        <button onclick="topFunction()" id="topButton" title="Go to top">Up</button>
+        <footer>
+            <a href="https://github.com/ArthurGrenier/Know-your-weather/issues">Request changes or report a bug</a>
+            <p>Made with headphones by <a href="https://github.com/ArthurGrenier">DarkOort</a></p>
+        </footer>
     </body>
 </html>
