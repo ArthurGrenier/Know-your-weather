@@ -16,6 +16,10 @@ h1, h2, h3, p, label {
     color: white;
 }
 
+.negative {
+    color: rgb(216, 119, 63);
+}
+
 details {
   padding-bottom: 20px;
   margin-bottom: 20px;

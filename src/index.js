@@ -72,9 +72,19 @@ async function getWeather() {
         
                 // info temp
                 let temp = document.createElement("p");
-                let tempText = document.createTextNode(
-                    "Temperature : " + weatherJson[i].Temperature.Value + "°" + weatherJson[i].Temperature.Unit
-                );
+                let tempText;
+                if (weatherJson[i].Temperature.Value <= 0) {
+                    temp.setAttribute("class", "negative");
+                    tempText = document.createTextNode(
+                        "/WARNING\\ Temperature : " + weatherJson[i].Temperature.Value + "°" + weatherJson[i].Temperature.Unit
+                    );
+                } else {
+                    temp.setAttribute("class", "positive");
+                    tempText = document.createTextNode(
+                        "Temperature : " + weatherJson[i].Temperature.Value + "°" + weatherJson[i].Temperature.Unit
+                    );
+                }
+                
                 temp.appendChild(tempText);
         
                 // info weather
@@ -174,16 +184,26 @@ async function getWeather() {
             // Temp max
             let maxTemp = document.createElement("p");
             let maxTempText = document.createTextNode(
-                "Max temperature : " + weatherJson.DailyForecasts[0].Temperature.Maximum.Value + "°" + weatherJson.DailyForecasts[0].Temperature.Maximum.Unit
+                "Maximum temperature : " + weatherJson.DailyForecasts[0].Temperature.Maximum.Value + "°" + weatherJson.DailyForecasts[0].Temperature.Maximum.Unit
             );
             maxTemp.appendChild(maxTempText);
 
             // Temp min
             let minTemp = document.createElement("p");
-            let minTempText = document.createTextNode(
-                "Max temperature : " + weatherJson.DailyForecasts[0].Temperature.Minimum.Value + "°" + weatherJson.DailyForecasts[0].Temperature.Minimum.Unit
-            );
+            let minTempText;
+            if (weatherJson.DailyForecasts[0].Temperature.Minimum.Value <= 0) {
+                minTemp.setAttribute("class", "negative");
+                minTempText = document.createTextNode(
+                    "/WARNING\\ Minimum temperature : " + weatherJson.DailyForecasts[0].Temperature.Minimum.Value + "°" + weatherJson.DailyForecasts[0].Temperature.Minimum.Unit
+                );
+            } else {
+                minTemp.setAttribute("class", "positive");
+                minTempText = document.createTextNode(
+                    "Minimum temperature : " + weatherJson.DailyForecasts[0].Temperature.Minimum.Value + "°" + weatherJson.DailyForecasts[0].Temperature.Minimum.Unit
+                );
+            }
             minTemp.appendChild(minTempText);
+            
 
             // Icon day
             let iconDay = new Image();
