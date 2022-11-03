@@ -84,12 +84,18 @@ async function getWeather() {
                     "Weather : " + weatherCodeGet
                 );
                 weather.appendChild(weatherText);
+
+                // weather icon
+                let icon = new Image();
+                icon.src = "./src/img/" + weatherJson[i].WeatherIcon + ".png";
         
                 // Append content to body
                 divRes.appendChild(hourTitle);
                 divRes.appendChild(probarain);
                 divRes.appendChild(temp);
                 divRes.appendChild(weather);
+                divRes.appendChild(icon);
+
                 if (isDetails) {
                     let detailsDoc = document.createElement("details");
 

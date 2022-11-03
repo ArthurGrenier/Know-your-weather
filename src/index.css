@@ -186,3 +186,8 @@ footer {
   text-align: center;
   position: relative;
 }
+
+img {
+  padding-bottom: 10px;
+  width: 100px;
+}
