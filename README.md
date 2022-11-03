@@ -6,6 +6,6 @@ So I decided to create this little application that allows you to have a clear w
   
 This [Website](https://arthurgrenier.github.io/Know-your-weather/index.html) hosted by Github :heart: 
 
-![kyw](https://user-images.githubusercontent.com/71335853/197992131-6278a270-9b84-4777-9982-92643cecf114.png)
+![know-your-weather](https://user-images.githubusercontent.com/71335853/199726554-09434341-6337-4a32-b747-4e4f297c7706.png)
   
 Made with 🎧 by Darkoort
