@@ -27,7 +27,6 @@ details > summary {
   cursor: pointer;
 }
 
-
 #searchButton {
     background: #000;
     backface-visibility: hidden;
@@ -167,4 +166,23 @@ input {
 	display: inline-block;
 	text-align: center;
 	width: 100%;
+}
+
+a {
+  color: darkgray
+}
+
+a:hover {
+  color: gray;
+}
+
+footer {
+  padding: 20px;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  background: rgb(22, 22, 22);
+  border-top: darkgray;
+  border-style: solid;
+  text-align: center;
+  position: relative;
 }

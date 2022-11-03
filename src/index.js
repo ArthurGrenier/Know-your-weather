@@ -1,15 +1,16 @@
 async function getWeather() {
-    // delete old res
-    if (document.getElementById("res")) {
-        document.body.removeChild(document.getElementById("res"));
-    }
-
     // var
     const token = "mVIz4OT8xX54RwGMC8KvBG5xC1IkDXhc";
     const weatherApi = "dataservice.accuweather.com";
     const checkboxHourly = document.getElementById("isHourly");
     const checkboxDetail = document.getElementById("isDetails");
     const metricCelcus = document.getElementById("celMet");
+    const resultDiv = document.getElementById("result");
+
+    // delete old res
+    if (document.getElementById("res")) {
+        resultDiv.removeChild(document.getElementById("res"));
+    }
 
     let isHourly = checkboxHourly.checked;
     let isDetails = checkboxDetail.checked;
@@ -42,7 +43,7 @@ async function getWeather() {
             // insert res
             let divRes = document.createElement('div');
             divRes.setAttribute("id", "res");
-            document.body.appendChild(divRes);
+            resultDiv.appendChild(divRes);
             let titleCity = document.createElement("h2");
             let titleCityC = null
             if (city == "") {
@@ -137,7 +138,7 @@ async function getWeather() {
             // insert res
             let divRes = document.createElement('div');
             divRes.setAttribute("id", "res");
-            document.body.appendChild(divRes);
+            resultDiv.appendChild(divRes);
             let titleCity = document.createElement("h2");
             let titleCityC = null
             if (city == "") {
@@ -203,7 +204,7 @@ async function getWeather() {
                 // Rain precipitaion in mm
                 let rainMm = document.createElement("p");
                 let rainMmText = document.createTextNode(
-                    "Rain probability : " + weatherJson.DailyForecasts[0].Day.Rain.PrecipitationProbability
+                    "Rain precipitaion : " + weatherJson.DailyForecasts[0].Day.Rain.Value + " " + weatherJson.DailyForecasts[0].Day.Rain.Unit
                 );
                 rainMm.appendChild(rainMmText);
                 detailsDoc.appendChild(rainMm);
@@ -211,7 +212,7 @@ async function getWeather() {
                 // wind
                 let wind = document.createElement("p");
                 let windText = document.createTextNode(
-                    "Wind : " + weatherJson.DailyForecasts[0].Day.Wind.Speed.Value + "°" + weatherJson.DailyForecasts[0].Day.Wind.Speed.Unit
+                    "Wind : " + weatherJson.DailyForecasts[0].Day.Wind.Speed.Value + " " + weatherJson.DailyForecasts[0].Day.Wind.Speed.Unit
                 );
                 wind.appendChild(windText);
                 detailsDoc.appendChild(wind);
@@ -222,7 +223,7 @@ async function getWeather() {
     } else {
         let divRes = document.createElement('div');
         divRes.setAttribute("id", "res");
-        document.body.appendChild(divRes);
+        resultDiv.appendChild(divRes);
         let titleCity = document.createElement("h2");
         let titleCityC = document.createTextNode("City doesn't exist");
         titleCity.appendChild(titleCityC);
