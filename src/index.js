@@ -178,18 +178,32 @@ async function getWeather() {
             );
             maxTemp.appendChild(maxTempText);
 
-            //Temp min
+            // Temp min
             let minTemp = document.createElement("p");
             let minTempText = document.createTextNode(
                 "Max temperature : " + weatherJson.DailyForecasts[0].Temperature.Minimum.Value + "°" + weatherJson.DailyForecasts[0].Temperature.Minimum.Unit
             );
             minTemp.appendChild(minTempText);
 
+            // Icon day
+            let iconDay = new Image();
+            iconDay.src = "./src/img/" + weatherJson.DailyForecasts[0].Day.Icon + ".png";
+
+            // Icon night
+            let iconNight = new Image();
+            iconNight.src = "./src/img/" + weatherJson.DailyForecasts[0].Night.Icon + ".png";
+
+            let divIcon = document.createElement("div");
+            divIcon.appendChild(iconDay);
+            divIcon.appendChild(iconNight);
+
             divRes.appendChild(weather);
             divRes.appendChild(br);
             divRes.appendChild(dayTitle);
             divRes.appendChild(maxTemp);
             divRes.appendChild(minTemp);
+            divRes.appendChild(divIcon);
+
             if (isDetails) {
                 let detailsDoc = document.createElement("details");
 

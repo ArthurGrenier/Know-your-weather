@@ -4,6 +4,8 @@ body {
     font-family: 'Courier New', monospace;
     font-size: 20px;
     display: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 #ui, #res {
@@ -17,8 +19,8 @@ h1, h2, h3, p, label {
 }
 
 details {
-  padding: 20px;
-  margin: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
   color: white;
 }
 
@@ -188,6 +190,5 @@ footer {
 }
 
 img {
-  padding-bottom: 10px;
   width: 100px;
 }
