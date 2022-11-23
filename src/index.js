@@ -73,7 +73,7 @@ async function getWeather() {
             // info probarain section
             let probarain = document.createElement("p");
             let probarainText = document.createTextNode(
-                "Probability of rainning : " + weatherCurrentJson[0].HasPrecipitation
+                "Is rainning : " + weatherCurrentJson[0].HasPrecipitation
             );
             probarain.appendChild(probarainText);
 
