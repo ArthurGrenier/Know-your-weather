@@ -63,10 +63,11 @@ async function getWeather() {
             // Current hour
             let date = new Date(weatherCurrentJson[0].LocalObservationDateTime);
             let hour = date.getHours();
+            let minute = date.getMinutes();
 
             // Title section
             let hourTitle = document.createElement("h3");
-            let titleContent = document.createTextNode(hour + "h00");
+            let titleContent = document.createTextNode(hour + "h" + minute);
             hourTitle.appendChild(titleContent);
 
             // info probarain section
