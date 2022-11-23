@@ -3,11 +3,11 @@ body {
     align-items: center;
     font-family: 'Courier New', monospace;
     font-size: 20px;
-    display: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 #ui, #res {
-    padding: 20px;
     margin: 20px;
     text-align: center;
 }
@@ -96,26 +96,33 @@ details > summary {
 }
 
 input {
-    border-radius: 2px;
+  width: max-content;
+    border-radius: 20px;
     text-align: center;
     background: #fff;
     font: inherit;
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
     border: 0;
     outline: 0;
-    padding: 12px 18px;
+    padding: 20px;
+    margin: 10px;
+}
+
+.CityInputs {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 10px;
 }
 
 #radio input {
-	width: 50px;
-	height: 50px;
+	width: auto;
+	height: auto;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
 	outline: none;
 	cursor: pointer;
-	border-radius: 2px;
-	padding: 10px;
 	background: #454857;
 	color: #bdbdbdbd;
 	font-size: 20px;
@@ -123,6 +130,7 @@ input {
 		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
 		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 	transition: all 100ms linear;
+  margin: 10px;
 }
 
 #radio input:checked {
@@ -139,16 +147,21 @@ input {
 	width: 100%;
 }
 
+#checkbox {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 10px;
+}
+
 #checkbox input {
-	width: 200px;
-	height: 50px;
+	width: max-content;
+	height: auto;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
 	outline: none;
 	cursor: pointer;
-	border-radius: 2px;
-	padding: 10px;
 	background: #454857;
 	color: #bdbdbdbd;
 	font-size: 20px;
@@ -184,9 +197,8 @@ footer {
   padding: 20px;
   font-family: 'Courier New', monospace;
   font-size: 10px;
-  background: rgb(22, 22, 22);
-  border-top: darkgray;
-  border-style: solid;
+  background: black;
+  border-top: 1px solid white;
   text-align: center;
   position: relative;
 }
