@@ -4,10 +4,12 @@ body {
     font-family: 'Courier New', monospace;
     font-size: 20px;
     display: flex;
+    align-items: center;
     flex-direction: column;
 }
 
 #ui, #res {
+    width: auto;
     margin: 20px;
     text-align: center;
 }
