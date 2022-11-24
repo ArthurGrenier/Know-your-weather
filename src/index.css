@@ -10,12 +10,16 @@ body {
 
 #ui, #res {
     width: auto;
-    margin-top: 20px;
+    margin: 20px;
     text-align: center;
 }
 
 h1, h2, h3, p, label {
     color: white;
+}
+
+#mainTitle {
+  margin-top: 0px;
 }
 
 .negative {
@@ -244,7 +248,7 @@ a:hover {
 }
 
 footer {
-  padding: 20px;
+  padding-top: 20px;
   font-family: 'Courier New', monospace;
   font-size: 10px;
   background: black;
