@@ -52,9 +52,9 @@ async function getWeather() {
             let titleCity = document.createElement("h2");
             let titleCityC = null
             if (city == "") {
-                titleCityC = document.createTextNode("Weather for zip code : " + zipCode);
+                titleCityC = document.createTextNode(zipCode + " - Weather");
             } else {
-                titleCityC = document.createTextNode("Weather for city " + city);
+                titleCityC = document.createTextNode(city + " - Weather");
             }
             titleCity.appendChild(titleCityC);
             divRes.appendChild(titleCity);
@@ -254,9 +254,9 @@ async function getWeather() {
             let titleCity = document.createElement("h2");
             let titleCityC = null
             if (city == "") {
-                titleCityC = document.createTextNode("Weather for zip code : " + zipCode);
+                titleCityC = document.createTextNode(zipCode + " - Weather");
             } else {
-                titleCityC = document.createTextNode("Weather for city " + city);
+                titleCityC = document.createTextNode(city + " - Weather");
             }
             titleCity.appendChild(titleCityC);
             divRes.appendChild(titleCity);
