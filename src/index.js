@@ -25,7 +25,7 @@ async function getWeather() {
     } else {
         urlCity = "https://" + weatherApi + "/locations/v1/cities/search?apikey=" + token + "&q=" + zipCode;
     }
-    
+
     const responseCity = await fetch(urlCity);
     const CityJson = await responseCity.json();
 
@@ -33,13 +33,18 @@ async function getWeather() {
 
         // br
         let br = document.createElement("br");
-    
+
         if (isHourly) {
             // request weather from city
-            let urlWeather = "https://"+weatherApi+"/forecasts/v1/hourly/12hour/" + CityJson[0].Key + "?apikey=" + token + "&details=true&metric=" + metric;
+            let urlWeather = "https://" + weatherApi + "/forecasts/v1/hourly/12hour/" + CityJson[0].Key + "?apikey=" + token + "&details=true&metric=" + metric;
             const response = await fetch(urlWeather);
             const weatherJson = await response.json();
-        
+
+            // request current hour
+            let urlCurrentHour = "https://" + weatherApi + "/currentconditions/v1/" + CityJson[0].Key + "?apikey=" + token + "&details=true&metric=" + metric;
+            const responseCurrent = await fetch(urlCurrentHour);
+            const weatherCurrentJson = await responseCurrent.json();
+
             // insert res
             let divRes = document.createElement('div');
             divRes.setAttribute("id", "res");
@@ -47,29 +52,120 @@ async function getWeather() {
             let titleCity = document.createElement("h2");
             let titleCityC = null
             if (city == "") {
-                titleCityC = document.createTextNode("Weather for zip code : " + zipCode);
+                titleCityC = document.createTextNode(zipCode + " - Weather");
             } else {
-                titleCityC = document.createTextNode("Weather for city " + city);
+                titleCityC = document.createTextNode(city + " - Weather");
             }
             titleCity.appendChild(titleCityC);
             divRes.appendChild(titleCity);
             let hourNumber = weatherJson.length;
-            for (i=0;hourNumber > i;i++) {
+
+            // Current hour
+            let date = new Date(weatherCurrentJson[0].LocalObservationDateTime);
+            let hour = date.getHours();
+            let minute = date.getMinutes();
+
+            // Title section
+            let hourTitle = document.createElement("h3");
+            let titleContent = document.createTextNode(hour + "h" + minute);
+            hourTitle.appendChild(titleContent);
+
+            // info probarain section
+            let probarain = document.createElement("p");
+            let probarainText = document.createTextNode(
+                "Is rainning : " + weatherCurrentJson[0].HasPrecipitation
+            );
+            probarain.appendChild(probarainText);
+
+            // info temp
+            let temp = document.createElement("p");
+            let tempText;
+            if (weatherCurrentJson[0].Temperature.Metric.Value <= 0) {
+                temp.setAttribute("class", "negative");
+                tempText = document.createTextNode(
+                    "/WARNING\\ Temperature : " + weatherCurrentJson[0].Temperature.Metric.Value + "°" + weatherCurrentJson[0].Temperature.Metric.Unit
+                );
+            } else {
+                temp.setAttribute("class", "positive");
+                tempText = document.createTextNode(
+                    "Temperature : " + weatherCurrentJson[0].Temperature.Metric.Value + "°" + weatherCurrentJson[0].Temperature.Metric.Unit
+                );
+            }
+
+            temp.appendChild(tempText);
+
+            // info weather
+            let weather = document.createElement("p");
+            let weatherCodeGet = weatherCurrentJson[0].WeatherText;
+            let weatherText = document.createTextNode(
+                "Weather : " + weatherCodeGet
+            );
+            weather.appendChild(weatherText);
+
+            // weather icon
+            let icon = new Image();
+            icon.src = "./src/img/" + weatherCurrentJson[0].WeatherIcon + ".png";
+
+            // Append content to body
+            divRes.appendChild(hourTitle);
+            divRes.appendChild(probarain);
+            divRes.appendChild(temp);
+            divRes.appendChild(weather);
+            divRes.appendChild(icon);
+
+            if (isDetails) {
+                let detailsDoc = document.createElement("details");
+
+                let detailSummary = document.createElement("summary");
+                let detailSummaryText = document.createTextNode("Details");
+                detailSummary.appendChild(detailSummaryText);
+
+                detailsDoc.appendChild(detailSummary);
+
+                // Real Feel Temperature
+                let RFTemp = document.createElement("p");
+                let RFTempText = document.createTextNode(
+                    "Real feel temperature : " + weatherCurrentJson[0].RealFeelTemperature.Metric.Value + "°" + weatherCurrentJson[0].RealFeelTemperature.Metric.Unit
+                );
+                RFTemp.appendChild(RFTempText);
+                detailsDoc.appendChild(RFTemp);
+
+                // Rain precipitaion in mm
+                let rainPrec = document.createElement("p");
+                let rainPrecText = document.createTextNode(
+                    "Rain precipitaion : " + weatherCurrentJson[0].PrecipitationSummary.Precipitation.Metric.Value + " " + weatherCurrentJson[0].PrecipitationSummary.Precipitation.Metric.Unit
+                );
+                rainPrec.appendChild(rainPrecText);
+                detailsDoc.appendChild(rainPrec);
+
+                // Wind
+                let wind = document.createElement("p");
+                let windText = document.createTextNode(
+                    "Wind : " + weatherCurrentJson[0].Wind.Speed.Metric.Value + " " + weatherCurrentJson[0].Wind.Speed.Metric.Unit
+                );
+                wind.appendChild(windText);
+                detailsDoc.appendChild(wind);
+
+                divRes.appendChild(detailsDoc);
+            }
+            divRes.appendChild(br);
+
+            for (i = 0; hourNumber > i; i++) {
                 let date = new Date(weatherJson[i].DateTime);
                 let hour = date.getHours();
-        
+
                 // Title section
                 let hourTitle = document.createElement("h3");
                 let titleContent = document.createTextNode(hour + "h00");
                 hourTitle.appendChild(titleContent);
-                
+
                 // info probarain section
                 let probarain = document.createElement("p");
                 let probarainText = document.createTextNode(
                     "Probability of rainning : " + weatherJson[i].RainProbability
                 );
                 probarain.appendChild(probarainText);
-        
+
                 // info temp
                 let temp = document.createElement("p");
                 let tempText;
@@ -84,9 +180,9 @@ async function getWeather() {
                         "Temperature : " + weatherJson[i].Temperature.Value + "°" + weatherJson[i].Temperature.Unit
                     );
                 }
-                
+
                 temp.appendChild(tempText);
-        
+
                 // info weather
                 let weather = document.createElement("p");
                 let weatherCodeGet = weatherJson[i].IconPhrase;
@@ -98,7 +194,7 @@ async function getWeather() {
                 // weather icon
                 let icon = new Image();
                 icon.src = "./src/img/" + weatherJson[i].WeatherIcon + ".png";
-        
+
                 // Append content to body
                 divRes.appendChild(hourTitle);
                 divRes.appendChild(probarain);
@@ -143,10 +239,10 @@ async function getWeather() {
                 }
                 divRes.appendChild(br);
             }
-            
+
         } else { // Hourly = false
             // request weather from city
-            let urlWeather = "https://"+weatherApi+"/forecasts/v1/daily/1day/" + CityJson[0].Key + "?apikey=" + token + "&details=true&metric=" + metric;
+            let urlWeather = "https://" + weatherApi + "/forecasts/v1/daily/1day/" + CityJson[0].Key + "?apikey=" + token + "&details=true&metric=" + metric;
 
             const response = await fetch(urlWeather);
             const weatherJson = await response.json();
@@ -158,15 +254,15 @@ async function getWeather() {
             let titleCity = document.createElement("h2");
             let titleCityC = null
             if (city == "") {
-                titleCityC = document.createTextNode("Weather for zip code : " + zipCode);
+                titleCityC = document.createTextNode(zipCode + " - Weather");
             } else {
-                titleCityC = document.createTextNode("Weather for city " + city);
+                titleCityC = document.createTextNode(city + " - Weather");
             }
             titleCity.appendChild(titleCityC);
             divRes.appendChild(titleCity);
 
             let date = new Date(weatherJson.DailyForecasts[0].Date);
-            
+
 
             // Title section
             let dayTitle = document.createElement("h3");
@@ -203,7 +299,7 @@ async function getWeather() {
                 );
             }
             minTemp.appendChild(minTempText);
-            
+
 
             // Icon day
             let iconDay = new Image();
@@ -271,17 +367,17 @@ async function getWeather() {
     }
 }
 
-window.onscroll = function() {
+window.onscroll = function () {
     const mybutton = document.getElementById("topButton");
 
     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
         mybutton.style.display = "block";
-      } else {
+    } else {
         mybutton.style.display = "none";
-      }    
+    }
 }
 
 // When the user clicks on the button, scroll to the top of the document
 function topFunction() {
-    window.scrollTo({top: 0, behavior: 'smooth'});
-  } 
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+} 

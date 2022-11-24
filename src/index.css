@@ -3,11 +3,14 @@ body {
     align-items: center;
     font-family: 'Courier New', monospace;
     font-size: 20px;
-    display: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    cursor: default;
 }
 
 #ui, #res {
-    padding: 20px;
+    width: auto;
     margin: 20px;
     text-align: center;
 }
@@ -16,25 +19,77 @@ h1, h2, h3, p, label {
     color: white;
 }
 
+#mainTitle {
+  margin-top: 0px;
+}
+
 .negative {
     color: rgb(216, 119, 63);
 }
 
-details {
-  padding-bottom: 20px;
-  margin-bottom: 20px;
+details[open] summary ~ * {
+  animation: open 0.3s ease-in-out;
+}
+
+summary {
   color: white;
 }
 
-details > summary {
-  color: gray;
+details {
+  border-bottom: 1px solid white;
+}
+
+@keyframes open {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details summary {
+  width: 100%;
+  padding: 0.5rem 0;
+  border-top: 1px solid white;
+  position: relative;
   cursor: pointer;
+  font-size: 1.25rem;
+  font-weight: 300;
+  list-style: none;
+}
+
+details summary:after {
+  content: "+";
+  color: white;
+  position: absolute;
+  font-size: 1.75rem;
+  line-height: 0;
+  margin-top: 0.75rem;
+  right: 0;
+  font-weight: 200;
+  transform-origin: center;
+  transition: 200ms linear;
+}
+
+details[open] summary:after {
+  transform: rotate(45deg);
+  font-size: 2rem;
+}
+
+details summary {
+  outline: 0;
 }
 
 #searchButton {
+    width: 200px;
     background: #000;
     backface-visibility: hidden;
-    border-radius: .375rem;
+    border-radius: 20px;
     border-style: solid;
     border-width: .125rem;
     box-sizing: border-box;
@@ -46,9 +101,9 @@ details > summary {
     font-weight: 700;
     letter-spacing: -.01em;
     line-height: 1.3;
-    padding: .875rem 1.125rem;
+    padding: 20px;
     position: relative;
-    text-align: left;
+    text-align: center;
     text-decoration: none;
     transform: translateZ(0) scale(1);
     transition: transform .2s;
@@ -96,26 +151,33 @@ details > summary {
 }
 
 input {
-    border-radius: 2px;
+  width: max-content;
+    border-radius: 20px;
     text-align: center;
     background: #fff;
     font: inherit;
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0 , .1);
     border: 0;
     outline: 0;
-    padding: 12px 18px;
+    padding: 20px;
+    margin: 10px;
+}
+
+.CityInputs {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 10px;
 }
 
 #radio input {
-	width: 50px;
-	height: 50px;
+	width: auto;
+	height: auto;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
 	outline: none;
 	cursor: pointer;
-	border-radius: 2px;
-	padding: 10px;
 	background: #454857;
 	color: #bdbdbdbd;
 	font-size: 20px;
@@ -123,6 +185,7 @@ input {
 		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
 		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 	transition: all 100ms linear;
+  margin: 10px;
 }
 
 #radio input:checked {
@@ -139,16 +202,21 @@ input {
 	width: 100%;
 }
 
-#checkbox input{
-	width: 200px;
-	height: 50px;
+#checkbox {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 10px;
+}
+
+#checkbox input {
+	width: max-content;
+	height: auto;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
 	outline: none;
 	cursor: pointer;
-	border-radius: 2px;
-	padding: 10px;
 	background: #454857;
 	color: #bdbdbdbd;
 	font-size: 20px;
@@ -181,12 +249,11 @@ a:hover {
 }
 
 footer {
-  padding: 20px;
+  padding-top: 20px;
   font-family: 'Courier New', monospace;
   font-size: 10px;
-  background: rgb(22, 22, 22);
-  border-top: darkgray;
-  border-style: solid;
+  background: black;
+  border-top: 1px solid white;
   text-align: center;
   position: relative;
 }
@@ -205,7 +272,7 @@ img {
   outline: none; /* Remove outline */
   background: #000;
   backface-visibility: hidden;
-  border-radius: .375rem;
+  border-radius: 20px;
   border-style: solid;
   border-width: .125rem;
   box-sizing: border-box;
@@ -216,7 +283,7 @@ img {
   font-weight: 700;
   letter-spacing: -.01em;
   line-height: 1.3;
-  padding: .875rem 1.125rem;
+  padding: 20px;
   text-align: left;
   text-decoration: none;
   transform: translateZ(0) scale(1);
