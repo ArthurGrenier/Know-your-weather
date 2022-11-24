@@ -69,6 +69,7 @@ async function getWeather() {
             let hourTitle = document.createElement("h3");
             let titleContent = document.createTextNode(hour + "h" + minute);
             hourTitle.appendChild(titleContent);
+            divRes.appendChild(hourTitle);
 
             // info probarain section
             let probarain = document.createElement("p");
@@ -76,6 +77,7 @@ async function getWeather() {
                 "Is rainning : " + weatherCurrentJson[0].HasPrecipitation
             );
             probarain.appendChild(probarainText);
+            divRes.appendChild(probarain);
 
             // info temp
             let temp = document.createElement("p");
@@ -93,6 +95,7 @@ async function getWeather() {
             }
 
             temp.appendChild(tempText);
+            divRes.appendChild(temp);
 
             // info weather
             let weather = document.createElement("p");
@@ -101,16 +104,11 @@ async function getWeather() {
                 "Weather : " + weatherCodeGet
             );
             weather.appendChild(weatherText);
+            divRes.appendChild(weather);
 
             // weather icon
             let icon = new Image();
             icon.src = "./src/img/" + weatherCurrentJson[0].WeatherIcon + ".png";
-
-            // Append content to body
-            divRes.appendChild(hourTitle);
-            divRes.appendChild(probarain);
-            divRes.appendChild(temp);
-            divRes.appendChild(weather);
             divRes.appendChild(icon);
 
             if (isDetails) {
@@ -263,12 +261,6 @@ async function getWeather() {
 
             let date = new Date(weatherJson.DailyForecasts[0].Date);
 
-
-            // Title section
-            let dayTitle = document.createElement("h3");
-            let dayContent = document.createTextNode("Date : " + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear());
-            dayTitle.appendChild(dayContent);
-
             //Text weather
             let weather = document.createElement("p");
             let weatherCodeGet = weatherJson.Headline.Text;
@@ -276,30 +268,31 @@ async function getWeather() {
                 "Weather : " + weatherCodeGet
             );
             weather.appendChild(weatherText);
+            divRes.appendChild(weather);
 
-            // Temp max
+            // Title section
+            let dayTitle = document.createElement("h3");
+            let dayContent = document.createTextNode("Date : " + date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear());
+            dayTitle.appendChild(dayContent);
+            divRes.appendChild(dayTitle);
+
+            // Temp max/min
             let maxTemp = document.createElement("p");
             let maxTempText = document.createTextNode(
-                "Maximum temperature : " + weatherJson.DailyForecasts[0].Temperature.Maximum.Value + "°" + weatherJson.DailyForecasts[0].Temperature.Maximum.Unit
+                "Temperature : " + weatherJson.DailyForecasts[0].Temperature.Maximum.Value + "°" + weatherJson.DailyForecasts[0].Temperature.Maximum.Unit + " / " +
+                weatherJson.DailyForecasts[0].Temperature.Minimum.Value + "°" + weatherJson.DailyForecasts[0].Temperature.Minimum.Unit
             );
             maxTemp.appendChild(maxTempText);
+            divRes.appendChild(maxTemp);
 
-            // Temp min
-            let minTemp = document.createElement("p");
-            let minTempText;
             if (weatherJson.DailyForecasts[0].Temperature.Minimum.Value <= 0) {
-                minTemp.setAttribute("class", "negative");
-                minTempText = document.createTextNode(
-                    "/WARNING\\ Minimum temperature : " + weatherJson.DailyForecasts[0].Temperature.Minimum.Value + "°" + weatherJson.DailyForecasts[0].Temperature.Minimum.Unit
-                );
-            } else {
-                minTemp.setAttribute("class", "positive");
-                minTempText = document.createTextNode(
-                    "Minimum temperature : " + weatherJson.DailyForecasts[0].Temperature.Minimum.Value + "°" + weatherJson.DailyForecasts[0].Temperature.Minimum.Unit
-                );
+                let minTempWarning = document.createElement("p");
+                let minTempWarningText;
+                minTempWarning.setAttribute("class", "negative");
+                minTempWarningText = document.createTextNode("/WARNING\\ Minimum temperature is negative !");
+                minTempWarning.appendChild(minTempWarningText);
+                divRes.appendChild(minTempWarning);
             }
-            minTemp.appendChild(minTempText);
-
 
             // Icon day
             let iconDay = new Image();
@@ -312,12 +305,6 @@ async function getWeather() {
             let divIcon = document.createElement("div");
             divIcon.appendChild(iconDay);
             divIcon.appendChild(iconNight);
-
-            divRes.appendChild(weather);
-            divRes.appendChild(br);
-            divRes.appendChild(dayTitle);
-            divRes.appendChild(maxTemp);
-            divRes.appendChild(minTemp);
             divRes.appendChild(divIcon);
 
             if (isDetails) {
@@ -381,3 +368,11 @@ window.onscroll = function () {
 function topFunction() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 } 
+
+function HourlyWeatherHTML(jsonResponse) {
+
+}
+
+function DailyWeatherHTML(jsonResponse) {
+
+}
