@@ -1,29 +1,52 @@
-async function getWeather() {
-    // var
+function getToken() {
     const token = "mVIz4OT8xX54RwGMC8KvBG5xC1IkDXhc";
-    const weatherApi = "dataservice.accuweather.com";
-    const checkboxHourly = document.getElementById("isHourly");
-    const checkboxDetail = document.getElementById("isDetails");
-    const metricCelcus = document.getElementById("celMet");
-    const resultDiv = document.getElementById("result");
+    return token;
+}
 
+function getWeatherApi() {
+    const weatherApi = "dataservice.accuweather.com";
+    return weatherApi;
+}
+
+function getCheckboxHourly() {
+    const checkboxHourly = document.getElementById("isHourly");
+    return checkboxHourly;
+}
+
+function getCheckboxDetail() {
+    const checkboxDetail = document.getElementById("isDetails");
+    return checkboxDetail;
+}
+
+function getMetricCelcus() {
+    const metricCelcus = document.getElementById("celMet");
+    return metricCelcus;
+}
+
+function getResultDiv() {
+    const resultDiv = document.getElementById("result");
+    return resultDiv;
+}
+
+async function getWeather() {
+    
     // delete old res
     if (document.getElementById("res")) {
-        resultDiv.removeChild(document.getElementById("res"));
+        getResultDiv().removeChild(document.getElementById("res"));
     }
 
-    let isHourly = checkboxHourly.checked;
-    let isDetails = checkboxDetail.checked;
-    let metric = metricCelcus.checked;
+    let isHourly = getCheckboxHourly().checked;
+    let isDetails = getCheckboxDetail().checked;
+    let metric = getMetricCelcus().checked;
     let city = document.getElementById("cityName").value;
     let zipCode = document.getElementById("zipCode").value;
 
     // request city
     let urlCity = "";
     if (zipCode == "") {
-        urlCity = "https://" + weatherApi + "/locations/v1/cities/search?apikey=" + token + "&q=" + city;
+        urlCity = "https://" + getWeatherApi() + "/locations/v1/cities/search?apikey=" + getToken() + "&q=" + city;
     } else {
-        urlCity = "https://" + weatherApi + "/locations/v1/cities/search?apikey=" + token + "&q=" + zipCode;
+        urlCity = "https://" + getWeatherApi() + "/locations/v1/cities/search?apikey=" + getToken() + "&q=" + zipCode;
     }
 
     const responseCity = await fetch(urlCity);
@@ -36,19 +59,19 @@ async function getWeather() {
 
         if (isHourly) {
             // request weather from city
-            let urlWeather = "https://" + weatherApi + "/forecasts/v1/hourly/12hour/" + CityJson[0].Key + "?apikey=" + token + "&details=true&metric=" + metric;
+            let urlWeather = "https://" + getWeatherApi() + "/forecasts/v1/hourly/12hour/" + CityJson[0].Key + "?apikey=" + getToken() + "&details=true&metric=" + metric;
             const response = await fetch(urlWeather);
             const weatherJson = await response.json();
 
             // request current hour
-            let urlCurrentHour = "https://" + weatherApi + "/currentconditions/v1/" + CityJson[0].Key + "?apikey=" + token + "&details=true&metric=" + metric;
+            let urlCurrentHour = "https://" + getWeatherApi() + "/currentconditions/v1/" + CityJson[0].Key + "?apikey=" + getToken() + "&details=true&metric=" + metric;
             const responseCurrent = await fetch(urlCurrentHour);
             const weatherCurrentJson = await responseCurrent.json();
 
             // insert res
             let divRes = document.createElement('div');
             divRes.setAttribute("id", "res");
-            resultDiv.appendChild(divRes);
+            getResultDiv().appendChild(divRes);
             let titleCity = document.createElement("h2");
             let titleCityC = null
             if (city == "") {
@@ -156,6 +179,7 @@ async function getWeather() {
                 let hourTitle = document.createElement("h3");
                 let titleContent = document.createTextNode(hour + "h00");
                 hourTitle.appendChild(titleContent);
+                divRes.appendChild(hourTitle);
 
                 // info probarain section
                 let probarain = document.createElement("p");
@@ -163,6 +187,7 @@ async function getWeather() {
                     "Probability of rainning : " + weatherJson[i].RainProbability
                 );
                 probarain.appendChild(probarainText);
+                divRes.appendChild(probarain);
 
                 // info temp
                 let temp = document.createElement("p");
@@ -180,6 +205,7 @@ async function getWeather() {
                 }
 
                 temp.appendChild(tempText);
+                divRes.appendChild(temp);
 
                 // info weather
                 let weather = document.createElement("p");
@@ -188,16 +214,11 @@ async function getWeather() {
                     "Weather : " + weatherCodeGet
                 );
                 weather.appendChild(weatherText);
+                divRes.appendChild(weather);
 
                 // weather icon
                 let icon = new Image();
                 icon.src = "./src/img/" + weatherJson[i].WeatherIcon + ".png";
-
-                // Append content to body
-                divRes.appendChild(hourTitle);
-                divRes.appendChild(probarain);
-                divRes.appendChild(temp);
-                divRes.appendChild(weather);
                 divRes.appendChild(icon);
 
                 if (isDetails) {
@@ -240,7 +261,7 @@ async function getWeather() {
 
         } else { // Hourly = false
             // request weather from city
-            let urlWeather = "https://" + weatherApi + "/forecasts/v1/daily/1day/" + CityJson[0].Key + "?apikey=" + token + "&details=true&metric=" + metric;
+            let urlWeather = "https://" + getWeatherApi() + "/forecasts/v1/daily/1day/" + CityJson[0].Key + "?apikey=" + getToken() + "&details=true&metric=" + metric;
 
             const response = await fetch(urlWeather);
             const weatherJson = await response.json();
@@ -248,7 +269,7 @@ async function getWeather() {
             // insert res
             let divRes = document.createElement('div');
             divRes.setAttribute("id", "res");
-            resultDiv.appendChild(divRes);
+            getResultDiv().appendChild(divRes);
             let titleCity = document.createElement("h2");
             let titleCityC = null
             if (city == "") {
@@ -346,7 +367,7 @@ async function getWeather() {
     } else {
         let divRes = document.createElement('div');
         divRes.setAttribute("id", "res");
-        resultDiv.appendChild(divRes);
+        getResultDiv().appendChild(divRes);
         let titleCity = document.createElement("h2");
         let titleCityC = document.createTextNode("City doesn't exist");
         titleCity.appendChild(titleCityC);
@@ -368,6 +389,10 @@ window.onscroll = function () {
 function topFunction() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 } 
+
+function CurrentWeatherHTML(jsonResponse) {
+
+}
 
 function HourlyWeatherHTML(jsonResponse) {
 
