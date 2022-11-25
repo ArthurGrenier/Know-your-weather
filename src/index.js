@@ -1,33 +1,36 @@
+/**
+ * Getters / Setters
+ * @returns value
+ */
 function getToken() {
     const token = "mVIz4OT8xX54RwGMC8KvBG5xC1IkDXhc";
     return token;
 }
-
 function getWeatherApi() {
     const weatherApi = "dataservice.accuweather.com";
     return weatherApi;
 }
-
 function getCheckboxHourly() {
     const checkboxHourly = document.getElementById("isHourly");
     return checkboxHourly;
 }
-
 function getCheckboxDetail() {
     const checkboxDetail = document.getElementById("isDetails");
     return checkboxDetail;
 }
-
 function getMetricCelcus() {
     const metricCelcus = document.getElementById("celMet");
     return metricCelcus;
 }
-
 function getResultDiv() {
     const resultDiv = document.getElementById("result");
     return resultDiv;
 }
 
+/**
+ * Retreive the situation of the ui when request weather
+ * Build the res div with the differents content
+ */
 async function getWeather() {
     
     // delete old res
@@ -91,7 +94,7 @@ async function getWeather() {
             let hourNumber = weatherJson.length;
 
             for (i = 0; hourNumber > i; i++) {
-                divResGlobal.appendChild(HourlyWeatherHTML(weatherJson, i));
+                divResGlobal.appendChild(HourlyWeatherHTML(weatherJson[i]));
                 getResultDiv().appendChild(divResGlobal);
             }
 
@@ -130,6 +133,9 @@ async function getWeather() {
     }
 }
 
+/**
+ * Scroll up the page
+ */
 window.onscroll = function () {
     const mybutton = document.getElementById("topButton");
 
@@ -145,6 +151,11 @@ function topFunction() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 } 
 
+/**
+ * Return in html the current situation of the weather
+ * @param {Json} jsonResponse the json response of the api call
+ * @returns the div with the content
+ */
 function CurrentWeatherHTML(jsonResponse) {
     let isDetails = getCheckboxDetail().checked;
 
@@ -240,14 +251,19 @@ function CurrentWeatherHTML(jsonResponse) {
     return divRes;
 }
 
-function HourlyWeatherHTML(jsonResponse, i) {
+/**
+ * Return in html the situation of the weather for an hour
+ * @param {Json} jsonResponse 
+ * @returns the div with the content
+ */
+function HourlyWeatherHTML(jsonResponse) {
     let isDetails = getCheckboxDetail().checked;
 
     let divRes = document.createElement("div");
     divRes.setAttribute("class", "one-result");
 
     
-    let date = new Date(jsonResponse[i].DateTime);
+    let date = new Date(jsonResponse.DateTime);
     let hour = date.getHours();
 
     // Title section
@@ -259,7 +275,7 @@ function HourlyWeatherHTML(jsonResponse, i) {
     // info probarain section
     let probarain = document.createElement("p");
     let probarainText = document.createTextNode(
-        "Probability of rainning : " + jsonResponse[i].RainProbability
+        "Probability of rainning : " + jsonResponse.RainProbability
     );
     probarain.appendChild(probarainText);
     divRes.appendChild(probarain);
@@ -267,15 +283,15 @@ function HourlyWeatherHTML(jsonResponse, i) {
     // info temp
     let temp = document.createElement("p");
     let tempText;
-    if (jsonResponse[i].Temperature.Value <= 0) {
+    if (jsonResponse.Temperature.Value <= 0) {
         temp.setAttribute("class", "negative");
         tempText = document.createTextNode(
-            "/WARNING\\ Temperature : " + jsonResponse[i].Temperature.Value + "°" + jsonResponse[i].Temperature.Unit
+            "/WARNING\\ Temperature : " + jsonResponse.Temperature.Value + "°" + jsonResponse.Temperature.Unit
         );
     } else {
         temp.setAttribute("class", "positive");
         tempText = document.createTextNode(
-            "Temperature : " + jsonResponse[i].Temperature.Value + "°" + jsonResponse[i].Temperature.Unit
+            "Temperature : " + jsonResponse.Temperature.Value + "°" + jsonResponse.Temperature.Unit
         );
     }
 
@@ -284,7 +300,7 @@ function HourlyWeatherHTML(jsonResponse, i) {
 
     // info weather
     let weather = document.createElement("p");
-    let weatherCodeGet = jsonResponse[i].IconPhrase;
+    let weatherCodeGet = jsonResponse.IconPhrase;
     let weatherText = document.createTextNode(
         "Weather : " + weatherCodeGet
     );
@@ -293,7 +309,7 @@ function HourlyWeatherHTML(jsonResponse, i) {
 
     // weather icon
     let icon = new Image();
-    icon.src = "./src/img/" + jsonResponse[i].WeatherIcon + ".png";
+    icon.src = "./src/img/" + jsonResponse.WeatherIcon + ".png";
     divRes.appendChild(icon);
 
     if (isDetails) {
@@ -308,7 +324,7 @@ function HourlyWeatherHTML(jsonResponse, i) {
         // Real Feel Temperature
         let RFTemp = document.createElement("p");
         let RFTempText = document.createTextNode(
-            "Real feel temperature : " + jsonResponse[i].RealFeelTemperature.Value + "°" + jsonResponse[i].RealFeelTemperature.Unit
+            "Real feel temperature : " + jsonResponse.RealFeelTemperature.Value + "°" + jsonResponse.RealFeelTemperature.Unit
         );
         RFTemp.appendChild(RFTempText);
         detailsDoc.appendChild(RFTemp);
@@ -316,7 +332,7 @@ function HourlyWeatherHTML(jsonResponse, i) {
         // Rain precipitaion in mm
         let rainPrec = document.createElement("p");
         let rainPrecText = document.createTextNode(
-            "Rain precipitaion : " + jsonResponse[i].Rain.Value + " " + jsonResponse[i].Rain.Unit
+            "Rain precipitaion : " + jsonResponse.Rain.Value + " " + jsonResponse.Rain.Unit
         );
         rainPrec.appendChild(rainPrecText);
         detailsDoc.appendChild(rainPrec);
@@ -324,7 +340,7 @@ function HourlyWeatherHTML(jsonResponse, i) {
         // Wind
         let wind = document.createElement("p");
         let windText = document.createTextNode(
-            "Wind : " + jsonResponse[i].Wind.Speed.Value + " " + jsonResponse[i].Wind.Speed.Unit
+            "Wind : " + jsonResponse.Wind.Speed.Value + " " + jsonResponse.Wind.Speed.Unit
         );
         wind.appendChild(windText);
         detailsDoc.appendChild(wind);
@@ -335,9 +351,14 @@ function HourlyWeatherHTML(jsonResponse, i) {
     return divRes;
 }
 
+/**
+ * Return in html the situation of the weather for a day
+ * @param {Json} jsonResponse 
+ * @returns the div with the content
+ */
 function DailyWeatherHTML(jsonResponse) {
     let isDetails = getCheckboxDetail().checked;
-    
+
     let divRes = document.createElement("div");
     divRes.setAttribute("class", "one-result");
 
