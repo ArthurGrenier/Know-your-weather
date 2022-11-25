@@ -9,10 +9,19 @@ body {
     cursor: default;
 }
 
-#ui, #res {
+#ui, #res, #res-title {
     width: auto;
     margin: 20px;
     text-align: center;
+}
+
+.one-result {
+  border-radius: 20px;
+  padding: 20px;
+  border-style: solid;
+  border-width: 2px;
+  color: white;
+  margin: 10px;
 }
 
 h1, h2, h3, p, label {
